@@ -1,0 +1,8 @@
+
+streamlit
+pandas
+mysql-connector-python
+google-genai
+sqlglot
+openpyxl
+python-dotenv
