@@ -1,4 +1,4 @@
-
+import time
 import streamlit as st
 import pandas as pd
 
@@ -25,9 +25,43 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    .stApp {
-        background-color: #f5f7fb;
-    }
+    
+       
+.stApp {
+    background-color: #f5f7fb;
+    color: #1f2937;
+}
+
+.stApp h1,
+.stApp h2,
+.stApp h3,
+.stApp h4 {
+    color: #0f172a !important;
+}
+
+.stApp p,
+.stApp label {
+    color: #334155;
+}
+
+.stApp .hero-card,
+.stApp .hero-card h1 {
+    color: #ffffff !important;
+}
+
+.stApp .hero-card p {
+    color: #e0eaff !important;
+}
+
+[data-testid="stMetricLabel"] {
+    color: #475569 !important;
+}
+
+[data-testid="stMetricValue"] {
+    color: #0f172a !important;
+}
+
+
 
     [data-testid="stSidebar"] {
         background-color: #101b33;
@@ -374,6 +408,40 @@ def submit_question():
 # DATA DISPLAY HELPERS
 # --------------------------------------------------
 
+
+def set_suggested_question(question):
+    """Fill the existing question input with a suggested question."""
+    st.session_state["question_input"] = question
+
+
+
+@st.cache_data(ttl=60, show_spinner=False)
+def load_database_overview():
+    """Load a small overview from the hosted QueryPilot database."""
+    overview_sql = """
+        SELECT
+            (SELECT COUNT(*) FROM delivery_centers)
+                AS delivery_center_count,
+            (SELECT COUNT(*) FROM center_daily_metrics)
+                AS metric_record_count,
+            (SELECT COUNT(DISTINCT city) FROM delivery_centers)
+                AS city_count
+    """
+
+    preview_sql = """
+        SELECT store_code, city, state
+        FROM delivery_centers
+        ORDER BY city
+        LIMIT 5
+    """
+
+    overview = run_generated_query(overview_sql)
+    preview = run_generated_query(preview_sql)
+
+    return overview, preview
+
+
+
 def format_number(value):
     if pd.isna(value):
         return "—"
@@ -604,6 +672,7 @@ def set_visual_mode(chat_id, message_key, mode):
 pending_question = st.session_state["pending_question"]
 st.session_state["pending_question"] = None
 
+
 if pending_question is not None:
     if not pending_question:
         st.session_state["empty_question_submitted"] = True
@@ -626,16 +695,41 @@ if pending_question is not None:
 
         try:
             with st.spinner("QueryPilot is analyzing your question..."):
+
+                # Step 1: Retrieve database schema
+                start_time = time.perf_counter()
                 schema = get_schema()
+                print(
+                    f"[QueryPilot Timing] Get schema: "
+                    f"{time.perf_counter() - start_time:.2f} seconds"
+                )
+
+                # Step 2: Generate SQL using Gemini
+                start_time = time.perf_counter()
                 sql = generate_sql(pending_question, schema)
+                print(
+                    f"[QueryPilot Timing] SQL generation: "
+                    f"{time.perf_counter() - start_time:.2f} seconds"
+                )
 
                 if sql == "CANNOT_ANSWER":
                     message["status"] = "cannot_answer"
 
                 else:
                     message["sql"] = sql
+
+                    # Step 3: Execute SQL
+                    start_time = time.perf_counter()
                     results = run_generated_query(sql)
+                    print(
+                        f"[QueryPilot Timing] Database query: "
+                        f"{time.perf_counter() - start_time:.2f} seconds"
+                    )
+
                     message["results"] = results
+
+                    # Step 4: Generate AI summary
+                    start_time = time.perf_counter()
 
                     try:
                         summary = generate_summary(
@@ -652,6 +746,12 @@ if pending_question is not None:
                             "an AI explanation could not be generated."
                         )
 
+                    finally:
+                        print(
+                            f"[QueryPilot Timing] Summary generation: "
+                            f"{time.perf_counter() - start_time:.2f} seconds"
+                        )
+
         except Exception as error:
             message["status"] = "error"
             message["error"] = str(error)
@@ -665,7 +765,6 @@ if pending_question is not None:
                 if len(pending_question) > 36
                 else pending_question
             )
-
 
 
 # --------------------------------------------------
@@ -782,6 +881,77 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+
+# --------------------------------------------------
+# DATABASE OVERVIEW AND SUGGESTED QUESTIONS
+# --------------------------------------------------
+
+st.markdown("## Explore your operations data")
+st.caption(
+    "See what's available in the database and discover "
+    "questions you can ask in plain English."
+)
+
+try:
+    overview, center_preview = load_database_overview()
+
+    if not overview.empty:
+        row = overview.iloc[0]
+
+        metric_columns = st.columns(3)
+
+        metric_columns[0].metric(
+            "Delivery centers",
+            f"{int(row['delivery_center_count']):,}",
+        )
+        metric_columns[1].metric(
+            "Daily metric records",
+            f"{int(row['metric_record_count']):,}",
+        )
+        metric_columns[2].metric(
+            "Cities",
+            f"{int(row['city_count']):,}",
+        )
+
+    with st.expander("Preview delivery centers", expanded=False):
+        st.dataframe(
+            center_preview,
+            use_container_width=True,
+            hide_index=True,
+        )
+
+except Exception:
+    st.info(
+        "The data overview is temporarily unavailable. "
+        "You can still ask questions below."
+    )
+
+st.markdown("### Try a suggested question")
+
+suggestions = [
+    "How many orders were delivered in total?",
+    "How many orders were delivered city wise?",
+    "Which city has the highest OTP percentage?",
+    "Show orders received and delivered by city.",
+    "List all delivery centers by city.",
+    "How many delivery centers are open?",
+]
+
+suggestion_columns = st.columns(2)
+
+for index, question in enumerate(suggestions):
+    with suggestion_columns[index % 2]:
+        st.button(
+            question,
+            key=f"suggested_question_{index}",
+            use_container_width=True,
+            on_click=set_suggested_question,
+            args=(question,),
+        )
+
+st.divider()
+
 
 active_chat_id = st.session_state["active_chat_id"]
 active_chat = st.session_state["chats"][active_chat_id]
