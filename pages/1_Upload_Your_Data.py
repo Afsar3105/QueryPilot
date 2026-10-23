@@ -40,38 +40,31 @@ DB_TABLE_NAME = "uploaded_data"
 # STYLING
 # ============================================================
 
+
 st.markdown(
     """
     <style>
-    /* Clean, light analytics workspace */
+    /* ==========================================
+       QUERYPILOT — UPLOAD YOUR DATA
+       Unified four-colour theme
+       ========================================== */
+
+    /* Main page */
     .stApp,
     [data-testid="stAppViewContainer"],
     [data-testid="stMain"] {
-        background: #f3f7fb !important;
-        color: #1e293b !important;
+        background-color: #FFFAFA !important;
+        color: #000080 !important;
     }
 
-    /* Fix low-contrast text in the main page */
     [data-testid="stMain"] .block-container {
-        color: #1e293b !important;
-        padding-top: 2.5rem !important;
-        padding-bottom: 2.5rem !important;
         max-width: 1500px;
+        padding-top: 2rem !important;
+        padding-bottom: 2.5rem !important;
+        color: #000080 !important;
     }
 
-    /* Light, clean Streamlit top bar instead of a dark strip */
-    header[data-testid="stHeader"] {
-        background: rgba(243, 247, 251, 0.96) !important;
-        height: 3.25rem !important;
-    }
-    header[data-testid="stHeader"] *,
-    [data-testid="stToolbar"],
-    [data-testid="stToolbar"] * {
-        color: #334155 !important;
-    }
-    [data-testid="stDecoration"] {
-        background: #0f9f92 !important;
-    }
+    /* Headings and readable body text */
     [data-testid="stMain"] h1,
     [data-testid="stMain"] h2,
     [data-testid="stMain"] h3,
@@ -79,242 +72,325 @@ st.markdown(
     [data-testid="stMain"] h5,
     [data-testid="stMain"] p,
     [data-testid="stMain"] label,
+    [data-testid="stMain"] li,
     [data-testid="stMain"] [data-testid="stMarkdownContainer"],
     [data-testid="stMain"] [data-testid="stCaptionContainer"] {
-        color: #1e293b !important;
+        color: #000080 !important;
     }
+
+    [data-testid="stMain"] h1,
     [data-testid="stMain"] h2,
-    [data-testid="stMain"] h3,
-    [data-testid="stMain"] h4 {
-        font-weight: 750;
-    }
-    [data-testid="stMain"] [data-testid="stMetricLabel"],
-    [data-testid="stMain"] [data-testid="stMetricValue"],
-    [data-testid="stMain"] [data-testid="stMetricDelta"] {
-        color: #0f172a !important;
-    }
-    [data-testid="stMain"] [data-testid="stExpander"] {
-        background: #ffffff;
-        border: 1px solid #dbe5ef;
-        border-radius: 12px;
-    }
-    [data-testid="stMain"] [data-testid="stFileUploader"] {
-        background: #ffffff !important;
-        border: 1px solid #dbe5ef !important;
-        border-radius: 14px;
-        padding: 12px;
-    }
-    [data-testid="stMain"] [data-testid="stFileUploader"] section {
-        background: #f8fafc !important;
-        border: 1px dashed #b8cbd8 !important;
-        border-radius: 12px !important;
-    }
-    [data-testid="stMain"] [data-testid="stFileUploader"] button {
-        background: #e0f2fe !important;
-        color: #075985 !important;
-        border: 1px solid #bae6fd !important;
-        border-radius: 9px !important;
+    [data-testid="stMain"] h3 {
         font-weight: 700 !important;
     }
-    [data-testid="stMain"] [data-testid="stFileUploader"] small,
-    [data-testid="stMain"] [data-testid="stFileUploader"] span {
-        color: #475569 !important;
+
+    /* Top toolbar */
+    header[data-testid="stHeader"] {
+        background-color: #FFFAFA !important;
     }
-    [data-testid="stMain"] [data-testid="stDataFrame"] {
-        border: 1px solid #dbe5ef;
-        border-radius: 12px;
-        overflow: hidden;
+
+    [data-testid="stDecoration"] {
+        background-color: #6D8196 !important;
     }
-    [data-testid="stMain"] code {
-        color: #0f766e !important;
-        background: #e6f4f1 !important;
+
+    /* ==========================================
+       SIDEBAR — MATCH DATABASE EXPLORER
+       ========================================== */
+
+    section[data-testid="stSidebar"],
+    section[data-testid="stSidebar"] > div {
+        background-color: #000080 !important;
     }
+
+    section[data-testid="stSidebar"] [data-testid="stSidebarNav"] {
+        display: none !important;
+    }
+
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3,
+    section[data-testid="stSidebar"] h4,
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] span {
+        color: #FFFAFA !important;
+    }
+
+    /* QueryPilot branding */
+    .querypilot-brand {
+        padding: 10px 2px 18px 2px;
+    }
+
+    .querypilot-brand-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #FFFAFA !important;
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 1.3;
+    }
+
+    .brand-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        background-color: #6D8196 !important;
+        color: #FFFAFA !important;
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+    .querypilot-brand-subtitle {
+        margin-top: 8px;
+        color: #ADD8E6 !important;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    /* Sidebar navigation buttons */
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"] {
+        display: flex;
+        align-items: center;
+        min-height: 46px;
+        padding: 10px 12px !important;
+        margin: 7px 0;
+        background-color: #6D8196 !important;
+        border: 1px solid #ADD8E6 !important;
+        border-radius: 10px !important;
+        color: #FFFAFA !important;
+        font-weight: 700 !important;
+        text-decoration: none !important;
+    }
+
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"] p,
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"] span {
+        color: #FFFAFA !important;
+    }
+
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"]:hover {
+        background-color: #ADD8E6 !important;
+    }
+
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"]:hover,
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"]:hover p,
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"]:hover span {
+        color: #000080 !important;
+    }
+
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"][aria-current="page"] {
+        background-color: #ADD8E6 !important;
+        border: 2px solid #FFFAFA !important;
+    }
+
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"][aria-current="page"],
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"][aria-current="page"] p,
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"][aria-current="page"] span {
+        color: #000080 !important;
+    }
+
+    /* Sidebar buttons */
+    section[data-testid="stSidebar"] div.stButton > button {
+        min-height: 44px;
+        background-color: #6D8196 !important;
+        color: #FFFAFA !important;
+        border: 1px solid #ADD8E6 !important;
+        border-radius: 10px !important;
+        font-weight: 650 !important;
+        box-shadow: none !important;
+        transition: background-color 0.2s ease;
+    }
+
+    section[data-testid="stSidebar"] div.stButton > button p,
+    section[data-testid="stSidebar"] div.stButton > button span {
+        color: #FFFAFA !important;
+    }
+
+    section[data-testid="stSidebar"] div.stButton > button:hover {
+        background-color: #ADD8E6 !important;
+    }
+
+    section[data-testid="stSidebar"] div.stButton > button:hover,
+    section[data-testid="stSidebar"] div.stButton > button:hover p,
+    section[data-testid="stSidebar"] div.stButton > button:hover span {
+        color: #000080 !important;
+    }
+
+    /* ==========================================
+       HERO / BRAND CARD
+       ========================================== */
+
     .hero-card {
         padding: 26px 30px;
-        border-radius: 18px;
-        background: linear-gradient(120deg, #e0f2fe 0%, #ccfbf1 55%, #99f6e4 100%);
-        color: white;
-        margin-top: 8px;
-        margin-bottom: 26px;
-        box-shadow: 0 8px 24px rgba(15, 118, 110, 0.08);
-        border: 1px solid rgba(15, 118, 110, 0.10);
+        margin: 8px 0 24px 0;
+        background-color: #000080 !important;
+        color: #FFFAFA !important;
+        border: 2px solid #6D8196;
+        border-radius: 16px;
+        box-shadow: none !important;
     }
+
     .hero-card h1,
-    [data-testid="stMain"] .hero-card h1 {
-        color: #12304a !important;
-        margin: 0 0 10px 0;
-        font-size: 2.1rem;
-        font-weight: 800;
-        line-height: 1.25;
+    .hero-card h2,
+    .hero-card p {
+        color: #FFFAFA !important;
     }
-    .hero-card p,
-    [data-testid="stMain"] .hero-card p {
-        color: #244b5a !important;
-        margin: 0;
-        font-size: 1rem;
-        line-height: 1.65;
-    }
+
+    /* ==========================================
+       BUTTONS
+       ========================================== */
+
     div.stButton > button {
-        border-radius: 10px;
-        font-weight: 600;
-    }
-    div.stButton > button[kind="primary"] {
-        background: linear-gradient(90deg, #0f766e, #14b8a6);
-        color: white;
-        border: 0;
-    }
-    [data-testid="stMetric"] {
-        background: #ffffff;
-        color: #1e293b !important;
-        border: 1px solid #dbe5ef;
-        border-radius: 14px;
-        padding: 16px;
-        box-shadow: 0 3px 10px rgba(15, 23, 42, 0.035);
-    }
-    [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #0b1224, #111d35);
-    }
-    [data-testid="stSidebar"] h1,
-    [data-testid="stSidebar"] h2,
-    [data-testid="stSidebar"] h3,
-    [data-testid="stSidebar"] p,
-    [data-testid="stSidebar"] label,
-    [data-testid="stSidebar"] span {
-        color: #f1f5f9;
-    }
-    section[data-testid="stSidebar"] div.stButton > button {
-        background: #202d46 !important;
-        color: #f1f5f9 !important;
-        border: 1px solid rgba(148, 163, 184, 0.2) !important;
-        border-radius: 12px !important;
         min-height: 42px;
+        background-color: #ADD8E6 !important;
+        color: #000080 !important;
+        border: 1px solid #6D8196 !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        box-shadow: none !important;
     }
-    section[data-testid="stSidebar"] div.stButton > button:hover {
-        background: linear-gradient(110deg, #2563eb, #0891b2, #0d9488) !important;
-        color: white !important;
-        border-color: #67e8f9 !important;
-        transform: translateY(-1px);
+
+    div.stButton > button p,
+    div.stButton > button span {
+        color: #000080 !important;
     }
 
-    
-/* ==========================================
-   QUERYPILOT BRANDING
-   ========================================== */
+    div.stButton > button:hover {
+        background-color: #6D8196 !important;
+    }
 
-/* Hide default Database Explorer / Upload Your Data links on this page */
-section[data-testid="stSidebar"] [data-testid="stSidebarNav"] {
-    display: none !important;
-}
+    div.stButton > button:hover,
+    div.stButton > button:hover p,
+    div.stButton > button:hover span {
+        color: #FFFAFA !important;
+    }
 
-section[data-testid="stSidebar"] {
-    background: linear-gradient(
-        180deg,
-        #0b1224 0%,
-        #102238 100%
-    ) !important;
-}
+    div.stButton > button[kind="primary"] {
+        background-color: #000080 !important;
+        color: #FFFAFA !important;
+        border: 1px solid #6D8196 !important;
+    }
 
-.querypilot-brand {
-    padding: 10px 2px 18px 2px;
-}
+    div.stButton > button[kind="primary"] p,
+    div.stButton > button[kind="primary"] span {
+        color: #FFFAFA !important;
+    }
 
-.querypilot-brand-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #ffffff;
-    font-size: 27px;
-    font-weight: 800;
-    letter-spacing: -0.7px;
-    line-height: 1.3;
-}
+    div.stButton > button[kind="primary"]:hover {
+        background-color: #6D8196 !important;
+    }
 
-.brand-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: #134e4a;
-    color: #5eead4;
-    font-size: 25px;
-    font-weight: 800;
-}
+    /* ==========================================
+       FILE UPLOADER
+       ========================================== */
 
-.querypilot-brand-subtitle {
-    margin-top: 8px;
-    color: #a8b8c9;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 1.5;
-}
+    [data-testid="stFileUploader"] {
+        background-color: #FFFAFA !important;
+        border: 1px solid #6D8196 !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+    }
 
-/* Sidebar buttons */
-section[data-testid="stSidebar"] div.stButton > button {
-    border-radius: 12px !important;
-    min-height: 46px;
-    font-weight: 750 !important;
-    transition: all 0.2s ease;
-}
+    [data-testid="stFileUploader"] section {
+        background-color: #ADD8E6 !important;
+        border: 1px dashed #6D8196 !important;
+        border-radius: 10px !important;
+    }
 
-/* Primary action: New Upload / New Chat */
-section[data-testid="stSidebar"] div.stButton > button[kind="primary"] {
-    background: linear-gradient(
-        110deg,
-        #0f766e,
-        #14b8a6
-    ) !important;
-    color: #ffffff !important;
-    border: 1px solid #5eead4 !important;
-}
+    [data-testid="stFileUploader"] button {
+        background-color: #6D8196 !important;
+        color: #FFFAFA !important;
+        border: 1px solid #6D8196 !important;
+        border-radius: 8px !important;
+    }
 
-/* Secondary action: Delete Uploaded Data */
-section[data-testid="stSidebar"] div.stButton > button[kind="secondary"] {
-    background: #173047 !important;
-    color: #f8fafc !important;
-    border: 1px solid rgba(148, 163, 184, 0.3) !important;
-}
+    [data-testid="stFileUploader"] button span,
+    [data-testid="stFileUploader"] button p {
+        color: #FFFAFA !important;
+    }
 
-/* Hover */
-section[data-testid="stSidebar"] div.stButton > button:hover {
-    border-color: #5eead4 !important;
-    transform: translateY(-1px);
-}
+    [data-testid="stFileUploader"] small,
+    [data-testid="stFileUploader"] span {
+        color: #000080 !important;
+    }
 
-/* Sidebar headings and supporting text */
-section[data-testid="stSidebar"] h3 {
-    color: #f8fafc !important;
-    font-weight: 750 !important;
-}
+    /* ==========================================
+       INPUTS AND SELECTORS
+       ========================================== */
 
-section[data-testid="stSidebar"] p,
-section[data-testid="stSidebar"] label {
-    color: #cbd5e1;
-}
-
-/* Keyboard focus */
-section[data-testid="stSidebar"] button:focus-visible {
-    outline: 2px solid #5eead4 !important;
-    outline-offset: 3px;
-}
-
-
-    /* Main-page controls and status messages */
     [data-testid="stMain"] input,
     [data-testid="stMain"] textarea,
     [data-testid="stMain"] [data-baseweb="select"] > div {
-        color: #1e293b !important;
-        background-color: #ffffff !important;
-        border-color: #cbd5e1 !important;
-    }
-    [data-testid="stMain"] [data-testid="stAlert"] {
-        border-radius: 12px;
-    }
-    [data-testid="stMain"] [data-testid="stAlert"] p {
-        color: #14532d !important;
+        background-color: #FFFAFA !important;
+        color: #000080 !important;
+        border-color: #6D8196 !important;
     }
 
+    /* ==========================================
+       TABLES, METRICS AND EXPANDERS
+       ========================================== */
+
+    [data-testid="stMetric"] {
+        background-color: #FFFAFA !important;
+        border: 1px solid #6D8196 !important;
+        border-radius: 12px !important;
+        padding: 16px !important;
+        box-shadow: none !important;
+    }
+
+    [data-testid="stMetricLabel"],
+    [data-testid="stMetricLabel"] *,
+    [data-testid="stMetricValue"],
+    [data-testid="stMetricValue"] * {
+        color: #000080 !important;
+    }
+
+    [data-testid="stDataFrame"],
+    [data-testid="stTable"] {
+        background-color: #FFFAFA !important;
+        border: 1px solid #6D8196 !important;
+        border-radius: 10px !important;
+    }
+
+    div[data-testid="stExpander"] {
+        background-color: #FFFAFA !important;
+        border: 1px solid #6D8196 !important;
+        border-radius: 10px !important;
+    }
+
+    div[data-testid="stExpander"] summary,
+    div[data-testid="stExpander"] summary p {
+        color: #000080 !important;
+    }
+
+    /* Alerts and status messages */
+    [data-testid="stAlert"] {
+        background-color: #ADD8E6 !important;
+        border: 1px solid #6D8196 !important;
+        border-radius: 10px !important;
+    }
+
+    [data-testid="stAlert"] p,
+    [data-testid="stAlert"] span {
+        color: #000080 !important;
+    }
+
+    /* Code blocks */
+    [data-testid="stMain"] code {
+        background-color: #ADD8E6 !important;
+        color: #000080 !important;
+    }
+
+    /* Keyboard focus */
+    .stApp button:focus-visible,
+    section[data-testid="stSidebar"] a:focus-visible {
+        outline: 2px solid #6D8196 !important;
+        outline-offset: 2px;
+    }
     </style>
     """,
     unsafe_allow_html=True,

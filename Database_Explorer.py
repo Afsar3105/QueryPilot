@@ -22,318 +22,322 @@ st.set_page_config(
 # PROFESSIONAL STYLING
 # --------------------------------------------------
 
+
 st.markdown(
     """
     <style>
-    
-       
-.stApp {
-    background-color: #f5f7fb;
-    color: #1f2937;
-}
+    /* =========================================
+       QUERYPILOT - UNIFIED FOUR-COLOUR THEME
+       =========================================
 
-.stApp h1,
-.stApp h2,
-.stApp h3,
-.stApp h4 {
-    color: #0f172a !important;
-}
+       #6D8196 - Slate blue-grey
+       #ADD8E6 - Light blue
+       #FFFAFA - Snow white
+       #000080 - Navy blue
+    */
 
-.stApp p,
-.stApp label {
-    color: #334155;
-}
+    /* ---------- MAIN APPLICATION ---------- */
 
-.stApp .hero-card,
-.stApp .hero-card h1 {
-    color: #ffffff !important;
-}
-
-.stApp .hero-card p {
-    color: #e0eaff !important;
-}
-
-[data-testid="stMetricLabel"] {
-    color: #475569 !important;
-}
-
-[data-testid="stMetricValue"] {
-    color: #0f172a !important;
-}
-
-
-
-    [data-testid="stSidebar"] {
-        background-color: #101b33;
+    .stApp {
+        background-color: #FFFAFA !important;
+        color: #000080 !important;
     }
 
-    [data-testid="stSidebar"] * {
-        color: #f1f5f9;
+    .stApp h1,
+    .stApp h2,
+    .stApp h3,
+    .stApp h4,
+    .stApp h5 {
+        color: #000080 !important;
     }
+
+    .stApp p,
+    .stApp label,
+    .stApp li,
+    .stApp small {
+        color: #000080;
+    }
+
+    /* Main content links */
+    .stApp a {
+        color: #000080;
+    }
+
+    /* ---------- SIDEBAR ---------- */
+
+    section[data-testid="stSidebar"] {
+        background: #000080 !important;
+        border-right: 2px solid #6D8196 !important;
+    }
+
+    section[data-testid="stSidebar"] > div {
+        background-color: #000080 !important;
+    }
+
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3,
+    section[data-testid="stSidebar"] h4,
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] span,
+    section[data-testid="stSidebar"] small {
+        color: #FFFAFA !important;
+    }
+
+    /* ---------- QUERYpilot BRANDING ---------- */
+
+    .querypilot-brand {
+        padding: 12px 2px 20px 2px;
+    }
+
+    .querypilot-brand-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #FFFAFA !important;
+        font-size: 25px;
+        font-weight: 800;
+        line-height: 1.3;
+    }
+
+    .brand-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background-color: #6D8196;
+        color: #FFFAFA !important;
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+    .querypilot-brand-subtitle {
+        margin-top: 8px;
+        color: #ADD8E6 !important;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    /* Hide default navigation if custom navigation is used */
+    section[data-testid="stSidebar"] [data-testid="stSidebarNav"] {
+        display: none;
+    }
+
+    /* Custom page navigation links */
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"] {
+        display: flex;
+        align-items: center;
+        min-height: 46px;
+        padding: 10px 12px !important;
+        margin: 7px 0;
+        background-color: #6D8196 !important;
+        border: 1px solid #ADD8E6 !important;
+        border-radius: 10px !important;
+        color: #FFFAFA !important;
+        font-weight: 700 !important;
+        text-decoration: none !important;
+    }
+
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"] p,
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"] span {
+        color: #FFFAFA !important;
+        font-weight: 700 !important;
+    }
+
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"]:hover {
+        background-color: #ADD8E6 !important;
+        border-color: #ADD8E6 !important;
+    }
+
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"]:hover,
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"]:hover p,
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"]:hover span {
+        color: #000080 !important;
+    }
+
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"][aria-current="page"] {
+        background-color: #ADD8E6 !important;
+        border: 2px solid #FFFAFA !important;
+    }
+
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"][aria-current="page"],
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"][aria-current="page"] p,
+    section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"][aria-current="page"] span {
+        color: #000080 !important;
+    }
+
+    /* ---------- SIDEBAR BUTTONS ---------- */
+
+    section[data-testid="stSidebar"] div.stButton > button {
+        min-height: 43px;
+        background-color: #6D8196 !important;
+        color: #FFFAFA !important;
+        border: 1px solid #ADD8E6 !important;
+        border-radius: 10px !important;
+        font-weight: 650 !important;
+        box-shadow: none !important;
+    }
+
+    section[data-testid="stSidebar"] div.stButton > button p,
+    section[data-testid="stSidebar"] div.stButton > button span {
+        color: #FFFAFA !important;
+    }
+
+    section[data-testid="stSidebar"] div.stButton > button:hover {
+        background-color: #ADD8E6 !important;
+        border-color: #ADD8E6 !important;
+    }
+
+    section[data-testid="stSidebar"] div.stButton > button:hover,
+    section[data-testid="stSidebar"] div.stButton > button:hover p,
+    section[data-testid="stSidebar"] div.stButton > button:hover span {
+        color: #000080 !important;
+    }
+
+    /* Sidebar inputs */
+    section[data-testid="stSidebar"] input,
+    section[data-testid="stSidebar"] textarea,
+    section[data-testid="stSidebar"] [data-baseweb="select"] > div {
+        background-color: #FFFAFA !important;
+        color: #000080 !important;
+        border-color: #6D8196 !important;
+    }
+
+    /* ---------- HERO SECTION ---------- */
 
     .hero-card {
         padding: 26px;
-        border-radius: 18px;
-        background: linear-gradient(120deg, #0f766e, #134e4a);
-        color: white;
         margin-bottom: 24px;
+        background-color: #000080 !important;
+        border: 2px solid #6D8196;
+        border-radius: 16px;
+        color: #FFFAFA !important;
     }
 
-    .hero-card h1 {
-        color: white;
-        margin-bottom: 8px;
-    }
-
+    .hero-card h1,
+    .hero-card h2,
     .hero-card p {
-        color: #e0eaff;
-        margin-bottom: 0;
+        color: #FFFAFA !important;
+    }
+
+    /* ---------- BUTTONS ---------- */
+
+    div.stButton > button {
+        min-height: 42px;
+        background-color: #ADD8E6 !important;
+        color: #000080 !important;
+        border: 1px solid #6D8196 !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        box-shadow: none !important;
+    }
+
+    div.stButton > button p,
+    div.stButton > button span {
+        color: #000080 !important;
+    }
+
+    div.stButton > button:hover {
+        background-color: #6D8196 !important;
+        border-color: #6D8196 !important;
+    }
+
+    div.stButton > button:hover,
+    div.stButton > button:hover p,
+    div.stButton > button:hover span {
+        color: #FFFAFA !important;
     }
 
     div.stButton > button[kind="primary"] {
-        background: linear-gradient(90deg, #0f766e, #14b8a6);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-weight: 600;
+        background-color: #000080 !important;
+        color: #FFFAFA !important;
+        border: 1px solid #6D8196 !important;
     }
 
-    div.stButton > button {
-        border-radius: 10px;
+    div.stButton > button[kind="primary"] p,
+    div.stButton > button[kind="primary"] span {
+        color: #FFFAFA !important;
     }
+
+    div.stButton > button[kind="primary"]:hover {
+        background-color: #6D8196 !important;
+        color: #FFFAFA !important;
+    }
+
+    /* ---------- METRIC CARDS ---------- */
 
     [data-testid="stMetric"] {
-        background: white;
+        background-color: #FFFAFA !important;
         padding: 16px;
-        border: 1px solid #e5eaf3;
-        border-radius: 14px;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-    }
-
-    [data-testid="stDataFrame"] {
+        border: 1px solid #6D8196 !important;
         border-radius: 12px;
+        box-shadow: none !important;
     }
 
-    div[data-testid="stExpander"] {
-        background-color: white;
+    [data-testid="stMetricLabel"],
+    [data-testid="stMetricLabel"] * {
+        color: #6D8196 !important;
+    }
+
+    [data-testid="stMetricValue"],
+    [data-testid="stMetricValue"] * {
+        color: #000080 !important;
+    }
+
+    /* ---------- TABLES ---------- */
+
+    [data-testid="stDataFrame"],
+    [data-testid="stDataFrame"] > div,
+    [data-testid="stTable"] {
+        background-color: #FFFAFA !important;
+        border: 1px solid #6D8196 !important;
         border-radius: 10px;
     }
 
-    
-/* ===== QUERYPILOT SIDEBAR CHAT HISTORY ===== */
+    /* ---------- EXPANDERS ---------- */
 
-/* Keep sidebar dark and premium */
-section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0b1224 0%, #111d35 100%);
-}
+    div[data-testid="stExpander"] {
+        background-color: #FFFAFA !important;
+        border: 1px solid #6D8196 !important;
+        border-radius: 10px !important;
+    }
 
-/* Default sidebar buttons */
-section[data-testid="stSidebar"] div.stButton > button {
-    background: #173b3b !important;
-    color: #f1f5f9 !important;
-    border: 1px solid rgba(148, 163, 184, 0.16) !important;
-    border-radius: 14px !important;
-    min-height: 46px;
-    font-weight: 600 !important;
-    transition:
-        background 0.25s ease,
-        color 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease,
-        transform 0.25s ease !important;
-}
+    div[data-testid="stExpander"] summary,
+    div[data-testid="stExpander"] summary p {
+        color: #000080 !important;
+    }
 
-/* Keep all nested button text visible */
-section[data-testid="stSidebar"] div.stButton > button p,
-section[data-testid="stSidebar"] div.stButton > button span {
-    color: #f1f5f9 !important;
-}
+    /* ---------- INPUTS AND SELECTORS ---------- */
 
-/* Stunning hover effect */
-section[data-testid="stSidebar"] div.stButton > button:hover {
-    background: linear-gradient(
-        110deg,
-        #0f766e 0%,
-        #0d9488 55%,
-        #14b8a6 100%
-    ) !important;
-    color: #ffffff !important;
-    border-color: rgba(94, 234, 212, 0.9) !important;
-    box-shadow:
-        0 0 0 1px rgba(45, 212, 191, 0.18),
-        0 8px 24px rgba(13, 148, 136, 0.30) !important;
-    transform: translateY(-2px) scale(1.01);
-}
+    .stApp input,
+    .stApp textarea,
+    .stApp [data-baseweb="select"] > div {
+        background-color: #FFFAFA !important;
+        color: #000080 !important;
+        border-color: #6D8196 !important;
+    }
 
-/* Ensure hover text stays white */
-section[data-testid="stSidebar"] div.stButton > button:hover p,
-section[data-testid="stSidebar"] div.stButton > button:hover span {
-    color: #ffffff !important;
-}
+    /* ---------- CHART CONTAINERS ---------- */
 
-/* Keyboard focus */
-section[data-testid="stSidebar"] div.stButton > button:focus-visible {
-    outline: 2px solid #5eead4 !important;
-    outline-offset: 3px;
-}
+    [data-testid="stVegaLiteChart"],
+    [data-testid="stPlotlyChart"],
+    [data-testid="stPyplot"] {
+        background-color: #FFFAFA !important;
+        border: 1px solid #6D8196;
+        border-radius: 10px;
+        padding: 6px;
+    }
 
-/* Sidebar headings */
-section[data-testid="stSidebar"] h1,
-section[data-testid="stSidebar"] h2,
-section[data-testid="stSidebar"] h3 {
-    color: #f8fafc !important;
-}
+    /* ---------- FOCUS AND ACCESSIBILITY ---------- */
 
-/* Sidebar captions and supporting text */
-section[data-testid="stSidebar"] p,
-section[data-testid="stSidebar"] label {
-    color: #cbd5e1;
-}
-
-/* Native multipage navigation: clear, bold labels */
-section[data-testid="stSidebar"] [data-testid="stSidebarNav"] a {
-    border-radius: 12px !important;
-    font-weight: 700 !important;
-    margin: 4px 0 !important;
-    padding: 10px 12px !important;
-    transition: background 0.2s ease, transform 0.2s ease !important;
-}
-
-/* Make Upload Your Data the most visible navigation item */
-section[data-testid="stSidebar"] [data-testid="stSidebarNav"] a[href*="Upload_Your_Data"] {
-    background: linear-gradient(110deg, #0f766e, #14b8a6) !important;
-    border: 1px solid rgba(94, 234, 212, 0.65) !important;
-    box-shadow: 0 6px 18px rgba(13, 148, 136, 0.22) !important;
-    margin-top: 8px !important;
-}
-
-section[data-testid="stSidebar"] [data-testid="stSidebarNav"] a[href*="Upload_Your_Data"]:hover {
-    background: linear-gradient(110deg, #115e59, #0f766e) !important;
-    transform: translateY(-1px);
-}
-
-/* Keep the active navigation item easy to identify */
-section[data-testid="stSidebar"] [data-testid="stSidebarNav"] a[aria-current="page"] {
-    border: 1px solid rgba(94, 234, 212, 0.7) !important;
-    background-color: rgba(15, 118, 110, 0.42) !important;
-}
-
-
-
-/* ==========================================
-   QUERYPILOT PROFESSIONAL SIDEBAR
-   ========================================== */
-
-/* Sidebar background */
-section[data-testid="stSidebar"] {
-    background: linear-gradient(
-        180deg,
-        #0b1224 0%,
-        #102238 100%
-    ) !important;
-}
-
-/* QueryPilot brand area */
-.querypilot-brand {
-    padding: 10px 2px 18px 2px;
-}
-
-.querypilot-brand-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #ffffff;
-    font-size: 27px;
-    font-weight: 800;
-    letter-spacing: -0.7px;
-    line-height: 1.3;
-}
-
-.brand-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: #134e4a;
-    color: #5eead4;
-    font-size: 25px;
-    font-weight: 800;
-}
-
-.querypilot-brand-subtitle {
-    margin-top: 8px;
-    color: #a8b8c9;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 1.5;
-}
-
-/* Hide automatic navigation so it doesn't appear
-   above the custom QueryPilot branding */
-section[data-testid="stSidebar"] [data-testid="stSidebarNav"] {
-    display: none;
-}
-
-/* Main page navigation links */
-section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"] {
-    display: flex;
-    align-items: center;
-    min-height: 48px;
-    padding: 11px 14px !important;
-    margin: 7px 0;
-    border: 1px solid rgba(148, 163, 184, 0.20);
-    border-radius: 12px;
-    color: #f8fafc !important;
-    font-weight: 750 !important;
-    transition: all 0.2s ease;
-}
-
-/* Ensure navigation text stays bold and visible */
-section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"] p,
-section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"] span {
-    color: #f8fafc !important;
-    font-weight: 750 !important;
-}
-
-/* Highlight Upload Your Data */
-section[data-testid="stSidebar"] a[href*="Upload_Your_Data"] {
-    background: linear-gradient(
-        110deg,
-        #0f766e,
-        #14b8a6
-    ) !important;
-    border: 1px solid #5eead4 !important;
-    box-shadow: 0 5px 16px rgba(13, 148, 136, 0.20);
-}
-
-/* Navigation hover */
-section[data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"]:hover {
-    background: #164e4a !important;
-    border-color: #5eead4 !important;
-    transform: translateY(-1px);
-}
-
-/* Sidebar section headings */
-section[data-testid="stSidebar"] h3 {
-    color: #f8fafc !important;
-    font-weight: 750 !important;
-}
-
-/* New Chat and chat history buttons */
-section[data-testid="stSidebar"] div.stButton > button {
-    border-radius: 11px !important;
-    font-weight: 650 !important;
-    min-height: 43px;
-}
-
-/* Keyboard accessibility */
-section[data-testid="stSidebar"] a:focus-visible,
-section[data-testid="stSidebar"] button:focus-visible {
-    outline: 2px solid #5eead4 !important;
-    outline-offset: 3px;
-}
-
+    .stApp button:focus-visible,
+    section[data-testid="stSidebar"] a:focus-visible {
+        outline: 2px solid #6D8196 !important;
+        outline-offset: 2px;
+    }
 
     </style>
     """,
